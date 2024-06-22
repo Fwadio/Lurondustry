@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://cyx1ue1i8iiuw"]
+
+[ext_resource type="Script" path="res://scripts/basic_wall.gd" id="1_8ayrw"]
+[ext_resource type="Texture2D" uid="uid://dujfn3i0cuhuc" path="res://SingleWall,4Sq.png" id="1_i50bh"]
+[ext_resource type="Script" path="res://scripts/Blueprint Area.gd" id="2_dm63i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vxwu6"]
+size = Vector2(401, 28)
+
+[node name="Basic wall" type="StaticBody2D"]
+position = Vector2(211, 64)
+script = ExtResource("1_8ayrw")
+
+[node name="Blueprint Area" type="Area2D" parent="."]
+script = ExtResource("2_dm63i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Blueprint Area"]
+position = Vector2(0.5, 1)
+shape = SubResource("RectangleShape2D_vxwu6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 1)
+shape = SubResource("RectangleShape2D_vxwu6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_i50bh")
+
+[connection signal="body_entered" from="Blueprint Area" to="Blueprint Area" method="_on_body_entered"]
+[connection signal="body_exited" from="Blueprint Area" to="Blueprint Area" method="_on_body_exited"]

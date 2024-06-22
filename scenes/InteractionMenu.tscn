@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://dd5no47lenqkq"]
+
+[ext_resource type="Script" path="res://scripts/InteractionMenu.gd" id="1_gvk0v"]
+
+[node name="InteractionMenu" type="Panel"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_top = -180.0
+offset_right = 180.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+mouse_filter = 1
+script = ExtResource("1_gvk0v")

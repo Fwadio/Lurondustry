@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://b124djdh5j8y6"]
+
+[ext_resource type="Script" path="res://scripts/CharScript.gd" id="1_je1b5"]
+[ext_resource type="Texture2D" uid="uid://dos88elkq1kjq" path="res://icon.svg" id="2_hhghg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7nh6c"]
+size = Vector2(32, 31)
+
+[node name="Test_Unit" type="CharacterBody2D"]
+input_pickable = true
+script = ExtResource("1_je1b5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-4.76837e-07, 4.76837e-07)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_hhghg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_7nh6c")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

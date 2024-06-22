@@ -1,0 +1,61 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwd2b4mp6sjns"]
+
+[ext_resource type="Script" path="res://scripts/ui.gd" id="1_gjv2a"]
+[ext_resource type="PackedScene" uid="uid://dd5no47lenqkq" path="res://scenes/InteractionMenu.tscn" id="2_e3hj1"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_gjv2a")
+
+[node name="UIhandler" type="Control" parent="."]
+layout_direction = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="UIhandler"]
+layout_mode = 1
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 208.0
+offset_bottom = 59.0
+
+[node name="TextSelection" type="RichTextLabel" parent="UIhandler/BoxContainer"]
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Nothing selected"
+
+[node name="BoxContainer2" type="BoxContainer" parent="UIhandler"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -135.0
+offset_top = 13.0
+offset_right = 4.0
+offset_bottom = 86.0
+grow_horizontal = 0
+
+[node name="Panel" type="Panel" parent="UIhandler/BoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextResources" type="RichTextLabel" parent="UIhandler/BoxContainer2/Panel"]
+layout_mode = 0
+offset_right = 138.0
+offset_bottom = 72.0
+bbcode_enabled = true
+text = "Vous avez:
+0  [img={20} style='display:inline;']res://icon.svg[/img]
+28 [img={20} style='display:inline;']res://icon.svg[/img]"
+metadata/_edit_use_anchors_ = true
+
+[node name="InteractionMenu" parent="UIhandler" instance=ExtResource("2_e3hj1")]
+layout_mode = 1
+metadata/_edit_use_anchors_ = true
