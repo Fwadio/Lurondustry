@@ -16,9 +16,10 @@ func _input(event):
 			Parent.rotate(deg_to_rad(18))
 
 func _process(delta):
-	build_self(not FinishedBuilding and not Parent.followCursor , delta)
-	print(not FinishedBuilding and not Parent.followCursor)
-	kill_self(FinishedBuilding)
+	if not FinishedBuilding and not Parent.followCursor:
+		build_self( delta)
+	if FinishedBuilding:
+		kill_self()
 	if(Parent.followCursor):
 		Parent.position=get_global_mouse_position()
 	pass
@@ -34,25 +35,22 @@ func _on_body_exited(body):
 	if Parent.followCursor and not has_overlapping_bodies():
 		Parent.sprite_2d.modulate=Color(Parent.CanPlaceColor)
 		CanPlace=true
-	pass # Replace with function body.
 	
-func kill_self(isVrai: bool):
-	if(isVrai):
-		Parent.followCursor=false
-		Parent.sprite_2d.modulate=Color(1, 1, 1, 1)
-		Parent.set_collision_layer_value(1,1)
-		Parent.set_collision_layer_value(2,0)
-		Parent.set_collision_mask_value(2,0)
-		Parent.remove_child(self)
-		queue_free()
+func kill_self():
+	Parent.followCursor=false
+	Parent.sprite_2d.modulate=Color(1, 1, 1, 1)
+	Parent.set_collision_layer_value(1,1)
+	Parent.set_collision_layer_value(2,0)
+	Parent.set_collision_mask_value(2,0)
+	Parent.remove_child(self)
+	queue_free()
 
-func build_self(isVrai,delta):
-	if (isVrai):
-		Parent.sprite_2d.modulate.r=1
-		Parent.sprite_2d.modulate.g=1
-		Parent.sprite_2d.modulate.b=1
-		if(Parent.sprite_2d.modulate.a <= 2.0):
-			Parent.followCursor=false
-			Parent.sprite_2d.modulate.a=Parent.sprite_2d.modulate.a+Parent.BuildTime/2*delta
-		else:
-			FinishedBuilding=true
+func build_self(delta):
+	Parent.sprite_2d.modulate.r=1
+	Parent.sprite_2d.modulate.g=1
+	Parent.sprite_2d.modulate.b=1
+	if(Parent.sprite_2d.modulate.a <= 2.0):
+		Parent.followCursor=false
+		Parent.sprite_2d.modulate.a=Parent.sprite_2d.modulate.a+Parent.BuildTime/2*delta
+	else:
+		FinishedBuilding=true

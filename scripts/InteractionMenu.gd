@@ -1,57 +1,56 @@
 extends Panel
-const  InteractionButton = preload("res://scenes/interactionButton.tscn")
-var children:Array
-signal Build(ID)
-var x0:float=10
-var y0:float=5
-var StartMenu: Dictionary ={
-	0:{"Name":"Attack*" , "function":"LoadAttackMenu"},
-	1:{"Name":"Build" , "function":"LoadBuildMenu"},
-	2:{"Name":"More*" , "function":"LoadMoreMenu"},
+const  InteractionButtonScene = preload("res://scenes/interactionButton.tscn")
+signal ButtonPressed(ID, params)
+
+const Menus :Dictionary= {
+	"StartMenu":[
+		{"Name":"Attack*" , "function":"LoadSubMenu", "ID": "AttackMenu"},
+		{"Name":"Build" , "function":"LoadSubMenu", "ID":"BuildMenu"},
+		{"Name":"More*" , "function":"LoadSubMenu", "ID":"More"},
+	],
+
+	"BuildMenu":[
+		{"Name":"<-","function":"LoadSubMenu", "ID": "StartMenu"},
+		{"Name":"Wall","function":"Build","ID":"Basic wall"}
+	]
 }
-var BuildMenu: Dictionary ={
-	0:{"Name":"<-","function":"LoadPreviousMenu"},
-	1:{"Name":"Wall","function":"Build","ID":"Basic wall"}
-}
-var MenuBuffer: Dictionary = StartMenu
-var PreviousMenu: Dictionary
-# Called when the node enters the scene tree for the first time.
+
+var MenuBuffer: String = "StartMenu"
+var PreviousMenu: String
+
 func _ready():
-	loadMenu(StartMenu)
-	pass # Replace with function body.
+	loadMenu("StartMenu")
 
-func Interactions(funcName ,emitter):
-	match funcName:
-		"LoadBuildMenu":
-			clear()
-			loadMenu(BuildMenu)
-		"Build":
-			emit_signal("Build",emitter.ID)
-		"LoadPreviousMenu":
-			clear()
-			loadMenu(PreviousMenu)
-		_:
-			print("Not Recognized")
-	pass
+func interactions(funcName ,emitter):
+	if(funcName == "LoadSubMenu"):
+		loadMenu(emitter.ID)
+	else:
+		emit_signal("ButtonPressed", emitter.function, emitter.ID)
 
-func loadMenu(Dict:Dictionary):
+func loadMenu(Menu:String):
+	const x0:float=10
+	const y0:float=5
+	var children:Array
 	PreviousMenu = MenuBuffer
-	MenuBuffer = Dict
+	MenuBuffer = Menu
 	var maxOptionsPerLine: int = 5
-	for i in Dict:
-		add_child(InteractionButton.instantiate())
+	var MenuBtns = Menus[Menu]
+	
+	clear()
+	for i in MenuBtns:
+		add_child(InteractionButtonScene.instantiate())
 	children=get_children()
 	for i in range(get_child_count()):
 		children[i].position=Vector2(x0+90*(i%maxOptionsPerLine),5 + 90*(int(i/maxOptionsPerLine)))
-		children[i].connect("InteractionClicked",Interactions)
-		children[i].Name.text=Dict[i]["Name"]
-		children[i].function=Dict[i]["function"]
-		if "ID" in Dict[i]:
-			children[i].ID=Dict[i]["ID"]
+		children[i].connect("InteractionClicked",interactions)
+		children[i].Name.text= MenuBtns[i]["Name"]
+		children[i].function=MenuBtns[i]["function"]
+		if "ID" in MenuBtns[i]:
+			children[i].ID= MenuBtns[i]["ID"]
 	
 	
 func clear():
 	for n in get_children():
-		n.disconnect("InteractionClicked",Interactions)
+		n.disconnect("InteractionClicked",interactions)
 		remove_child(n)
 		n.queue_free()

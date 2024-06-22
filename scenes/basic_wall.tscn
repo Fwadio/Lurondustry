@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/basic_wall.gd" id="1_8ayrw"]
 [ext_resource type="Texture2D" uid="uid://dujfn3i0cuhuc" path="res://SingleWall,4Sq.png" id="1_i50bh"]
-[ext_resource type="Script" path="res://scripts/Blueprint Area.gd" id="2_dm63i"]
+[ext_resource type="Script" path="res://scripts/BlueprintArea.gd" id="2_dm63i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vxwu6"]
 size = Vector2(401, 28)

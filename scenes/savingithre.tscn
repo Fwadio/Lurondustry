@@ -3328,6 +3328,6 @@ script = ExtResource("4_qa37e")
 
 [connection signal="cancelKeyPressed" from="." to="Test_Unit" method="_on_world_cancel_key_pressed"]
 [connection signal="selected" from="Test_Unit" to="." method="_on_test_unit_selected"]
-[connection signal="Build" from="UI/UIhandler/InteractionMenu" to="." method="_on_interaction_menu_build"]
+[connection signal="ButtonPressed" from="UI/UIhandler/InteractionMenu" to="." method="_on_interaction_menu"]
 
 [editable path="UI"]

@@ -18,8 +18,10 @@ func _on_test_unit_selected(isSelected:bool, unitSelected):
 		ui.changeTxt("Selection","Nothing Selected")
 
 
-func _on_interaction_menu_build(ID):
-	Loadscene=SceneDict[ID]
-	var scene_instance = Loadscene.instantiate()
-	scene_instance.set_name(ID)
-	add_child(scene_instance)
+func _on_interaction_menu(function, params):
+	match function:
+		"Build":
+			Loadscene=SceneDict[params]
+			var scene_instance = Loadscene.instantiate()
+			scene_instance.set_name(params)
+			add_child(scene_instance)
